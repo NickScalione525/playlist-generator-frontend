@@ -65,6 +65,7 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
+    awesome_print (1.9.2)
     bootsnap (1.7.5)
       msgpack (~> 1.0)
     builder (3.2.4)
@@ -80,6 +81,8 @@ GEM
       activesupport (>= 4.2.0)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
+    json-prettyprint (0.0.2)
+      coderay (~> 1.0)
     jsonapi-renderer (0.2.2)
     listen (3.5.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -160,8 +163,10 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.2)
+  awesome_print (~> 1.9, >= 1.9.2)
   bootsnap (>= 1.4.4)
   byebug
+  json-prettyprint (~> 0.0.2)
   listen (~> 3.3)
   pry
   puma (~> 5.0)
