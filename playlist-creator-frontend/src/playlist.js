@@ -9,18 +9,18 @@ class Playlist {
 constructor(playlist) {
     this.name = playlist.name
     this.id = playlist.id
-    this.songs = playlist.songs
+    this.songs = playlist.songs.map(song => new Song(song))
 
 }
-
+// initialize method
 
 appendPlaylist() {
-    const playlistDiv = document.getElementById('playlists')
+    const playlistsDiv = document.getElementById('playlists')
     const li = document.createElement("li")
-    li.innertext = this.name
+    li.innerText = this.name
     li.addEventListener('click', this.renderPlaylistShowPage.bind(this))
     playlistsDiv.append(li)
-    appendSongs(this.songs, li)
+    Song.appendSongs(this.songs, li)
 
 
 }
@@ -30,6 +30,7 @@ appendPlaylist() {
         playlistContainer.children[1].innerHTML = ""
         playlistContainer.children[0].remove()
         this.appendPlaylist()
+        Song.appendSongForm()
     }
 
     static fetchPlaylists() {
@@ -67,11 +68,12 @@ appendPlaylist() {
 
         fetch("http://localhost:3000/playlists", options)
         .then(jsonToJS)
+        // turn object from json to JS
         .then(playlist => {
             let newPlaylist = new Playlist(playlist)
             newPlaylist.appendPlaylist()
         })
-
+        // creating a new object from the old in order to get new methods not available to old  object and then call append playlist on it.
     }
 
 }
