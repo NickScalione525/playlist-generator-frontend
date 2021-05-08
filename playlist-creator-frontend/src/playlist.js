@@ -5,17 +5,25 @@ const playlistForm = document.getElementById('playlistForm')
 
 class Playlist {
 
+   static allPlaylists = []
 
-constructor(playlist) {
-    this.name = playlist.name
-    this.id = playlist.id
-    this.songs = playlist.songs.map(song => new Song(song))
 
+constructor({name, id, songs}) {
+    this.name = name
+    this.id = id
+    Playlist.allPlaylists.push(this)
+    this.songs.forEach(song => new Song(song))
+    
 }
 // initialize method
 
+
+get songs() {
+    return Song.allSongs.filter(song => song.playlistId === this.id)
+}
  appendSongs(element) {
     const ul = document.createElement('ul')
+    ul.id = `playlist-${this.id}`
     element.append(ul)
     for (let song of this.songs) {
         song.appendSong(ul)
@@ -40,8 +48,23 @@ appendPlaylist() {
         playlistContainer.children[1].innerHTML = ""
         playlistContainer.children[0].remove()
         this.appendPlaylist()
-        Song.appendSongForm()
+        this.appendSongForm()
     }
+
+    appendSongForm() {
+        const playlists = document.getElementById('playlists')
+        const songForm = `
+        <form id="songForm">
+        <label>Song Name:</label>  
+        <input id="songName"/>
+        <input type="hidden" id="${this.id}"/>
+        <input type="submit" value="Add Song"/>
+        </form>
+        `
+        playlists.innerHTML += songForm
+        document.getElementById('songForm').addEventListener('submit', Song.addSong)
+        }
+
 
     static fetchPlaylists() {
         fetch("http://localhost:3000/playlists")
