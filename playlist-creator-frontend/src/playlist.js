@@ -14,13 +14,23 @@ constructor(playlist) {
 }
 // initialize method
 
+ appendSongs(element) {
+    const ul = document.createElement('ul')
+    element.append(ul)
+    for (let song of this.songs) {
+        song.appendSong(ul)
+    }
+}
+
 appendPlaylist() {
     const playlistsDiv = document.getElementById('playlists')
     const li = document.createElement("li")
+    const div = document.createElement("div")
     li.innerText = this.name
     li.addEventListener('click', this.renderPlaylistShowPage.bind(this))
-    playlistsDiv.append(li)
-    Song.appendSongs(this.songs, li)
+    playlistsDiv.append(div)
+    div.append(li)
+    this.appendSongs(div)
 
 
 }

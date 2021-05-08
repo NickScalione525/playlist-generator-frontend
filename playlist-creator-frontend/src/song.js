@@ -23,39 +23,35 @@ class Song {
         document.getElementById('songForm').addEventListener('submit', addSong)
         }
 
-        static appendSongs(songs, element) {
-            element.append(ul)
-            for (let song of songs) {
-                song.appendSong()
-            }
-        }
 
-        appendSong() {
-            const songLi= document.createElement("li")
+
+        appendSong(ul) {
+            const songLi = document.createElement("li")
                 const songDelete = document.createElement("button")
                 songDelete.innerText = "Delete"
                 songDelete.id = this.id
                 songLi.innerText = this.name
-                songDelete.addEventListener('click', function(e) {
-                    deleteSong(this.id, songLi)
+                songDelete.addEventListener('click', e =>  {
+                    this.deleteSong(songLi)
                 })
                 songLi.append(songDelete)
                 ul.append(songLi)
-
+        }
+        
+        deleteSong(songLi) {
+            fetch(`http://localhost:3000/songs/${this.id}`, {
+                method: "DELETE"
+            }).then(jsonToJS)
+            .then(m => {
+                songLi.remove()
+            })
         }
 }
 
 
 
 
-function deleteSong(songId, songLi) {
-    fetch(`http://localhost:3000/songs/${song.id}`, {
-        method: "DELETE"
-    }).then(jsonToJS)
-    .then(m => {
-        songLi.remove()
-    })
-}
+
 
 
 function appendSongForm() {
