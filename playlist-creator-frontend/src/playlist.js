@@ -1,4 +1,4 @@
-const playlistForm = document.getElementById('playlistForm')
+
 
 
 
@@ -8,49 +8,63 @@ class Playlist {
    static allPlaylists = []
 
 
-constructor({name, id, songs}) {
+    constructor({name, id, songs}) {
     this.name = name
     this.id = id
     Playlist.allPlaylists.push(this)
     this.songs.forEach(song => new Song(song))
     
-}
-// initialize method
-
-
-get songs() {
-    return Song.allSongs.filter(song => song.playlistId === this.id)
-}
- appendSongs(element) {
-    const ul = document.createElement('ul')
-    ul.id = `playlist-${this.id}`
-    element.append(ul)
-    for (let song of this.songs) {
-        song.appendSong(ul)
     }
-}
-
-appendPlaylist() {
-    const playlistsDiv = document.getElementById('playlists')
-    const li = document.createElement("li")
-    const div = document.createElement("div")
-    li.innerText = this.name
-    li.addEventListener('click', this.renderPlaylistShowPage.bind(this))
-    playlistsDiv.append(div)
-    div.append(li)
-    this.appendSongs(div)
+        // initialize method
 
 
-}
+    get songs() {
+        return Song.allSongs.filter(song => song.playlistId === this.id)
+    }
+    appendSongs(element) {
+        const ul = document.createElement('ul')
+        ul.id = `playlist-${this.id}`
+        element.append(ul)
+        for (let song of this.songs) {
+            song.appendSong(ul)
+        }
+    }
+
+    appendPlaylist() {
+        const playlistsDiv = document.getElementById('playlists')
+        const li = document.createElement("li")
+        const div = document.createElement("div")
+        li.innerText = this.name
+        li.id = `playlist-name-${this.id}`
+        li.addEventListener('click', this.renderPlaylistShowPage.bind(this))
+        playlistsDiv.append(div)
+        div.append(li)
+        this.appendSongs(div)
+    }
 
     renderPlaylistShowPage() {
         const playlistContainer = document.getElementById('playlistContainer')
+        const back8tn = document.createElement('button')
         playlistContainer.children[1].innerHTML = ""
         playlistContainer.children[0].remove()
+        back8tn.addEventListener('click', returnToHome)
+        back8tn.innerText = "Home"
+        playlistContainer.append(back8tn)
+
         this.appendPlaylist()
+        this.addEditListener()
         this.appendSongForm()
     }
 
+
+        addEditListener() {
+            const li = document.getElementById(`playlist-name-${this.id}`)
+            li.addEventListener('click', this.openEditForm)
+        }
+
+        openEditForm(){
+            
+        }
     appendSongForm() {
         const playlists = document.getElementById('playlists')
         const songForm = `
@@ -78,6 +92,12 @@ appendPlaylist() {
             let newPlaylist = new Playlist(playlist)
             newPlaylist.appendPlaylist()
         }
+    }
+
+    static appendPlaylistsOnReturnHome() {
+        for (let playlist of Playlist.allPlaylists) {
+            playlist.appendPlaylist()
+    }
     }
 
     static postPlaylist(e) {

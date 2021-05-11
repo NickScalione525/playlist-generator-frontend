@@ -1,11 +1,11 @@
-const ul = document.createElement('ul')
+
 
 
 class Song {
 
     static allSongs = []
 
-    constructor({id, name, playlistId}) {
+    constructor(id, name, playlistId) {
         this.id = id
         this.name = name
         this.playlistId = playlistId
@@ -14,12 +14,12 @@ class Song {
 
 
         appendSong(ul) {
-        const songLi = document.createElement("li")
+            const songLi = document.createElement("li")
             const songDelete = document.createElement("button")
             songDelete.innerText = "Delete"
             songDelete.id = this.id
             songLi.innerText = this.name
-            songDelete.addEventListener('click', e =>  {
+            songDelete.addEventListener("click", e =>  {
                 this.deleteSong(songLi)
             })
             songLi.append(songDelete)
@@ -43,7 +43,7 @@ class Song {
             const body = {
                 song: {
                     name: userInput,
-                    playlistId: playlistId
+                    playlist_id: playlistId
                 }
             }
             const options = {
@@ -61,6 +61,7 @@ class Song {
             .then(jsonToJS)
             // turn object from json to JS
             .then(song => {
+            
                 let ul = document.getElementById(`playlist-${song.playlist_id}`)
                 let newSong = new Song(song)
                 newSong.appendSong(ul)
