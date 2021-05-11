@@ -19,7 +19,7 @@ function returnToHome(){
     </form>
     <div id="playlists"></div>
     `
-    playlistForm = document.getElementById('playlistForm')
+    let playlistForm = document.getElementById('playlistForm')
     playlistForm.addEventListener('submit', Playlist.postPlaylist)
     Playlist.appendPlaylistsOnReturnHome()
 }

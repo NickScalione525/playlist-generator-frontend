@@ -13,7 +13,7 @@ class Song {
     }
 
 
-        appendSong(ul) {
+        appendSongs(ul) {
             const songLi = document.createElement("li")
             const songDelete = document.createElement("button")
             songDelete.innerText = "Delete"
@@ -62,7 +62,7 @@ class Song {
             // turn object from json to JS
             .then(song => {
             
-                let ul = document.getElementById(`playlist-${song.playlist_id}`)
+                let ul = document.getElementById(`playlist-name-${this.playlist_id}`)
                 let newSong = new Song(song)
                 newSong.appendSong(ul)
             })
