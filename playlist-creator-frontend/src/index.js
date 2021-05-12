@@ -1,4 +1,4 @@
-const playlistForm = document.getElementById('playlistForm')
+let playlistForm = document.getElementById('playlistForm')
 playlistForm.addEventListener('submit', Playlist.postPlaylist)
 
 Playlist.fetchPlaylists()
